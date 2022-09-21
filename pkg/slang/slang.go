@@ -23,18 +23,15 @@ type Result struct {
 	Downvote   int `json:"thumbs_down"`
 }
 
-func fetchWord(wordToFind string) (string, error) {
+func fetchWord(wordToFind string) (SearchResult, error) {
 	client := req.C()
 	var result SearchResult
 
 	_, err := client.R().SetQueryParam("term", wordToFind).SetResult(&result).Get(API_URL)
-
-	if err != nil {
-	}
-
-	return result.Results[0].Definition, err
+	return result, err
 }
 
 func LookupWord(wordToFind string) (string, error) {
-	return fetchWord(wordToFind)
+	result, err := fetchWord(wordToFind)
+	return result.Results[0].Definition, err
 }
