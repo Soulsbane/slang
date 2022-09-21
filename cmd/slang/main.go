@@ -2,20 +2,15 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/Soulsbane/slang/pkg/slang"
+	"github.com/alexflint/go-arg"
 )
 
 func main() {
-	args := os.Args[1:]
+	arg.MustParse(&args)
 
-	if len(args) == 0 {
-		return
-	}
-
-	wordToFind := args[0]
-	definition, err := slang.LookupWord(wordToFind)
+	definition, err := slang.LookupWord(args.WordToFind)
 
 	if err != nil {
 		panic(err)
