@@ -31,7 +31,7 @@ func fetchWord(wordToFind string) (Results, error) {
 	return results, err
 }
 
-func LookupWord(wordToFind string) (string, error) {
+func LookupWord(wordToFind string, listAll bool) (string, error) {
 	results, err := fetchWord(wordToFind)
 	return results.List[0].Definition, err
 }

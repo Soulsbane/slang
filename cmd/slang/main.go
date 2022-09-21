@@ -10,7 +10,7 @@ import (
 func main() {
 	arg.MustParse(&args)
 
-	definition, err := slang.LookupWord(args.WordToFind)
+	definition, err := slang.LookupWord(args.WordToFind, args.ListAll)
 
 	if err != nil {
 		panic(err)
