@@ -7,5 +7,5 @@ import (
 
 func main() {
 	arg.MustParse(&args)
-	slang.LookupWord(args.WordToFind, args.ListAll)
+	slang.LookupWord(args.Word, args.ListAll)
 }
