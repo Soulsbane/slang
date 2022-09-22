@@ -1,6 +1,8 @@
 package slang
 
 import (
+	"fmt"
+
 	"github.com/imroc/req/v3"
 )
 
@@ -31,7 +33,18 @@ func fetchWord(wordToFind string) (Results, error) {
 	return results, err
 }
 
-func LookupWord(wordToFind string, listAll bool) (string, error) {
+func LookupWord(wordToFind string, listAll bool) {
 	results, err := fetchWord(wordToFind)
-	return results.List[0].Definition, err
+
+	if err != nil {
+		panic(err)
+	}
+
+	if listAll {
+		for _, result := range results.List {
+			fmt.Println(result.Definition + "\n")
+		}
+	} else {
+		fmt.Println(results.List[0].Definition)
+	}
 }
