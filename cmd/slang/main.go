@@ -6,6 +6,8 @@ import (
 )
 
 func main() {
+	var args ProgramArgs
+
 	arg.MustParse(&args)
 	slang.LookupWord(args.Word, args.ListAll)
 }
