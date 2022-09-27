@@ -40,11 +40,15 @@ func LookupWord(wordToFind string, listAll bool) {
 		panic(err)
 	}
 
-	if listAll {
-		for _, result := range results.List {
-			fmt.Println(result.Definition + "\n")
+	if len(results.List) > 0 {
+		if listAll {
+			for _, result := range results.List {
+				fmt.Println(result.Definition + "\n")
+			}
+		} else {
+			fmt.Println(results.List[0].Definition)
 		}
 	} else {
-		fmt.Println(results.List[0].Definition)
+		fmt.Println("No results found for: " + wordToFind)
 	}
 }
