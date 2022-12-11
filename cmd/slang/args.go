@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/carlmjohnson/versioninfo"
 )
 
@@ -14,5 +16,5 @@ func (args ProgramArgs) Description() string {
 }
 
 func (ProgramArgs) Version() string {
-	return versioninfo.Short()
+	return fmt.Sprintln("Version: ", versioninfo.Short())
 }
