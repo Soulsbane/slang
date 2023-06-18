@@ -37,18 +37,18 @@ func LookupWord(wordToFind string, listAll bool) {
 	results, err := fetchWord(wordToFind)
 
 	if err != nil {
-		panic(err)
-	}
-
-	if len(results.List) > 0 {
-		if listAll {
-			for _, result := range results.List {
-				fmt.Println(result.Definition + "\n")
+		fmt.Println("Error fetching word! Try again later.")
+	} else {
+		if len(results.List) > 0 {
+			if listAll {
+				for _, result := range results.List {
+					fmt.Println(result.Definition + "\n")
+				}
+			} else {
+				fmt.Println(results.List[0].Definition)
 			}
 		} else {
-			fmt.Println(results.List[0].Definition)
+			fmt.Println("No results found for: " + wordToFind)
 		}
-	} else {
-		fmt.Println("No results found for: " + wordToFind)
 	}
 }
