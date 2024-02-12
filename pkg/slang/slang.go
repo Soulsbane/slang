@@ -2,7 +2,6 @@ package slang
 
 import (
 	"fmt"
-
 	"github.com/imroc/req/v3"
 )
 
@@ -29,7 +28,7 @@ func fetchWord(wordToFind string) (Results, error) {
 	client := req.C()
 	var results Results
 
-	_, err := client.R().SetQueryParam("term", wordToFind).SetResult(&results).Get(API_URL)
+	_, err := client.R().SetQueryParam("term", wordToFind).SetSuccessResult(&results).Get(API_URL)
 	return results, err
 }
 
