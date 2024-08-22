@@ -5,7 +5,7 @@ import (
 	"github.com/imroc/req/v3"
 )
 
-const API_URL = "http://api.urbandictionary.com/v0/define"
+const urbanDictionaryLink = "http://api.urbandictionary.com/v0/define"
 
 type Results struct {
 	Type   string `json:"result_type"`
@@ -28,7 +28,7 @@ func fetchWord(wordToFind string) (Results, error) {
 	client := req.C()
 	var results Results
 
-	_, err := client.R().SetQueryParam("term", wordToFind).SetSuccessResult(&results).Get(API_URL)
+	_, err := client.R().SetQueryParam("term", wordToFind).SetSuccessResult(&results).Get(urbanDictionaryLink)
 	return results, err
 }
 
