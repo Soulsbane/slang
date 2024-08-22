@@ -1,11 +1,14 @@
 module github.com/Soulsbane/slang
 
-go 1.21
+go 1.21.3
+
+toolchain go1.23.0
 
 require (
 	github.com/alexflint/go-arg v1.4.3
 	github.com/carlmjohnson/versioninfo v0.22.5
 	github.com/imroc/req/v3 v3.43.3
+	github.com/tiagomelo/go-clipboard v0.1.1
 )
 
 require (
@@ -18,6 +21,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/klauspost/compress v1.17.8 // indirect
 	github.com/onsi/ginkgo/v2 v2.17.1 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/quic-go v0.42.0 // indirect
 	github.com/refraction-networking/utls v1.6.4 // indirect
