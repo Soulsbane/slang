@@ -6,6 +6,7 @@ import (
 	"github.com/Soulsbane/slang/pkg/slang"
 	"github.com/alexflint/go-arg"
 	"github.com/jedib0t/go-pretty/v6/table"
+	"github.com/jedib0t/go-pretty/v6/text"
 	"github.com/tiagomelo/go-clipboard/clipboard"
 	"os"
 )
@@ -13,6 +14,9 @@ import (
 func getOutputTable() table.Writer {
 
 	outputTable := table.NewWriter()
+	outputTable.SetColumnConfigs([]table.ColumnConfig{
+		{Number: 1, Align: text.AlignLeft, WidthMax: 80},
+	})
 
 	outputTable.SetOutputMirror(os.Stdout)
 	outputTable.AppendHeader(table.Row{"Definition"})
@@ -31,23 +35,21 @@ func handleCopyToClipboard(definition string) {
 }
 
 func handleListResults(results []slang.Result, listAll bool, copyToClipboard bool) {
-	//outputTable := getOutputTable()
+	outputTable := getOutputTable()
 
 	if listAll {
 		for _, result := range results {
-			//outputTable.AppendRow(table.Row{result.Definition})
-			fmt.Println(result.Definition + "\n")
+			outputTable.AppendRow(table.Row{result})
 		}
 	} else {
-		//outputTable.AppendRow(table.Row{results[0].Definition})
-		fmt.Println(results[0].Definition)
+		outputTable.AppendRow(table.Row{results[0].Definition})
 
 		if copyToClipboard {
 			handleCopyToClipboard(results[0].Definition)
 		}
 	}
 
-	//outputTable.Render()
+	outputTable.Render()
 }
 
 func main() {
