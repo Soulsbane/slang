@@ -11,11 +11,11 @@ import (
 	"os"
 )
 
-func getOutputTable() table.Writer {
+func getOutputTable(maxWidth int) table.Writer {
 
 	outputTable := table.NewWriter()
 	outputTable.SetColumnConfigs([]table.ColumnConfig{
-		{Number: 1, Align: text.AlignLeft, WidthMax: 80},
+		{Number: 1, Align: text.AlignLeft, WidthMax: maxWidth},
 	})
 
 	outputTable.SetOutputMirror(os.Stdout)
@@ -34,8 +34,8 @@ func handleCopyToClipboard(definition string) {
 	}
 }
 
-func handleListResults(results []slang.Result, listAll bool, copyToClipboard bool) {
-	outputTable := getOutputTable()
+func handleListResults(results []slang.Result, listAll bool, copyToClipboard bool, maxWidth int) {
+	outputTable := getOutputTable(maxWidth)
 
 	if listAll {
 		for _, result := range results {
@@ -63,6 +63,6 @@ func main() {
 	} else if errors.As(err, &slang.ErrorFetchingResult) {
 		fmt.Println("Failed to fetch definition")
 	} else {
-		handleListResults(results, args.ListAll, args.Copy)
+		handleListResults(results, args.ListAll, args.Copy, args.MaxWidth)
 	}
 }
