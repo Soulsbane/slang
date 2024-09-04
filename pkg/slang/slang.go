@@ -7,8 +7,8 @@ import (
 
 const urbanDictionaryLink = "http://api.urbandictionary.com/v0/define"
 
-var ErrorFetchingResult = errors.New("failed to fetch definition")
-var NoResultsFound = errors.New("no results found")
+var ErrFetchingResult = errors.New("failed to fetch definition")
+var ErrNoResultsFound = errors.New("no results found")
 
 type Results struct {
 	Type   string `json:"result_type"`
@@ -34,12 +34,12 @@ func LookupWord(wordToFind string) ([]Result, error) {
 	_, err := client.R().SetQueryParam("term", wordToFind).SetSuccessResult(&results).Get(urbanDictionaryLink)
 
 	if err != nil {
-		return []Result{}, ErrorFetchingResult
+		return []Result{}, ErrFetchingResult
 	} else {
 		if len(results.List) > 0 {
 			return results.List, nil
 		} else {
-			return []Result{}, NoResultsFound
+			return []Result{}, ErrNoResultsFound
 		}
 	}
 }

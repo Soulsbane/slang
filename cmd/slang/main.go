@@ -58,9 +58,9 @@ func main() {
 	arg.MustParse(&args)
 	results, err := slang.LookupWord(args.Word)
 
-	if errors.As(err, &slang.NoResultsFound) {
+	if errors.As(err, &slang.ErrNoResultsFound) {
 		fmt.Println("No results found")
-	} else if errors.As(err, &slang.ErrorFetchingResult) {
+	} else if errors.As(err, &slang.ErrFetchingResult) {
 		fmt.Println("Failed to fetch definition")
 	} else {
 		handleListResults(results, args.ListAll, args.Copy, args.MaxWidth)
