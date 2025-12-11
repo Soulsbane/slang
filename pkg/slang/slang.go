@@ -1,11 +1,12 @@
 package slang
 
 import (
+	"encoding/json"
 	"errors"
-	"github.com/imroc/req/v3"
+	"net/http"
 )
 
-const urbanDictionaryLink = "http://api.urbandictionary.com/v0/define"
+const urbanDictionaryLink = "http://api.urbandictionary.com/v0/define?term="
 
 var ErrFetchingResult = errors.New("failed to fetch definition")
 var ErrNoResultsFound = errors.New("no results found")
@@ -28,18 +29,25 @@ type Result struct {
 }
 
 func LookupWord(wordToFind string) ([]Result, error) {
-	client := req.C()
 	var results Results
 
-	_, err := client.R().SetQueryParam("term", wordToFind).SetSuccessResult(&results).Get(urbanDictionaryLink)
+	resp, err := http.Get(urbanDictionaryLink + wordToFind)
 
 	if err != nil {
-		return []Result{}, ErrFetchingResult
+		return nil, ErrFetchingResult
+	}
+
+	defer resp.Body.Close()
+
+	err = json.NewDecoder(resp.Body).Decode(&results)
+
+	if err != nil {
+		return nil, ErrNoResultsFound
+	}
+
+	if len(results.List) > 0 {
+		return results.List, nil
 	} else {
-		if len(results.List) > 0 {
-			return results.List, nil
-		} else {
-			return []Result{}, ErrNoResultsFound
-		}
+		return []Result{}, ErrNoResultsFound
 	}
 }

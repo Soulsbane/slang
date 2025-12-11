@@ -3,12 +3,13 @@ package main
 import (
 	"errors"
 	"fmt"
+	"os"
+
 	"github.com/Soulsbane/slang/pkg/slang"
 	"github.com/alexflint/go-arg"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"github.com/tiagomelo/go-clipboard/clipboard"
-	"os"
 )
 
 func getOutputTable(maxWidth int) table.Writer {
@@ -58,9 +59,9 @@ func main() {
 	arg.MustParse(&args)
 	results, err := slang.LookupWord(args.Word)
 
-	if errors.As(err, &slang.ErrNoResultsFound) {
+	if errors.Is(err, slang.ErrNoResultsFound) {
 		fmt.Println("No results found")
-	} else if errors.As(err, &slang.ErrFetchingResult) {
+	} else if errors.Is(err, slang.ErrFetchingResult) {
 		fmt.Println("Failed to fetch definition")
 	} else {
 		handleListResults(results, args.ListAll, args.Copy, args.MaxWidth)
