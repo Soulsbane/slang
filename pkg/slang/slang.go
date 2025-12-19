@@ -9,7 +9,7 @@ import (
 const urbanDictionaryLink = "http://api.urbandictionary.com/v0/define?term="
 
 var ErrFetchingResult = errors.New("failed to fetch definition")
-var ErrNoResultsFound = errors.New("no results found")
+var ErrNoDefinition = errors.New("failed to find a definition for that word")
 
 type Results struct {
 	Type   string `json:"result_type"`
@@ -42,12 +42,12 @@ func LookupWord(wordToFind string) ([]Result, error) {
 	err = json.NewDecoder(resp.Body).Decode(&results)
 
 	if err != nil {
-		return nil, ErrNoResultsFound
+		return nil, ErrNoDefinition
 	}
 
 	if len(results.List) > 0 {
 		return results.List, nil
 	} else {
-		return []Result{}, ErrNoResultsFound
+		return []Result{}, ErrNoDefinition
 	}
 }
